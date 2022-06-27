@@ -60,8 +60,6 @@ export const Home = () => {
     return mostCloseDate;
   }, []);
 
-  const mostRecentSchedule = getMostCloseSchedule(scheduleData);
-
   const handleCountdown = useCallback(mostRecentSchedule => {
     const now = new Date().getTime();
     const countDownDate = new Date('Jun 28, 2022 12:37:25').getTime();
@@ -85,8 +83,6 @@ export const Home = () => {
     return result;
   }, []);
 
-  setInterval(handleCountdown, 1000);
-
   return (
     <>
       <Separator type="Small" />
@@ -98,7 +94,7 @@ export const Home = () => {
                 <Hbox.Item hAlign="center">
                   <H3>Próxima refeição em</H3>
                   <Separator type="Small" />
-                  <H1>{countdown}</H1>
+                  <H1>{12}</H1>
                   <Separator type="Small" />
                 </Hbox.Item>
               </Hbox>
