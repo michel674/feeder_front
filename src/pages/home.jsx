@@ -94,7 +94,7 @@ export const Home = () => {
                 <Hbox.Item hAlign="center">
                   <H3>Próxima refeição em</H3>
                   <Separator type="Small" />
-                  <H1>{12}</H1>
+                  <H1>{'12h23m40s'}</H1>
                   <Separator type="Small" />
                 </Hbox.Item>
               </Hbox>

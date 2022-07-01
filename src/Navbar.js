@@ -9,9 +9,6 @@ const Navbar = () => {
           <NavLink to="/dashboard" activeStyle>
             {faIcon.home}
           </NavLink>
-          <NavLink to="/cattles" activeStyle>
-            {faIcon.cow}
-          </NavLink>
           <NavLink to="/tag-color" activeStyle>
             {faIcon.tag}
           </NavLink>
