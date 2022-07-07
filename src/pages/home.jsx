@@ -47,7 +47,7 @@ export const Home = () => {
   //   return result;
   // }, []);
 
-  const controllerUrl = 'http://192.168.0.26/';
+  const controllerUrl = 'http://192.168.161.87/';
 
   const { data, request: getWaterMeasure } = useRequest({
     route: '/api/water-measures/1669',
@@ -69,7 +69,7 @@ export const Home = () => {
     getWaterMeasure({ params: {}, withCredentials: false });
   }, [getWaterMeasure]);
 
-  const handleUpdateWaterMeasure = useCallback(() => {  
+  const handleUpdateWaterMeasure = useCallback(() => {
     getWaterMeasure({ params: {}, withCredentials: false });
   }, [getWaterMeasure]);
 
