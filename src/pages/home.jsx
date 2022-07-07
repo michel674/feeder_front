@@ -71,7 +71,6 @@ export const Home = () => {
 
   const handleUpdateWaterMeasure = useCallback(() => {
     getWaterMeasure({ params: {}, withCredentials: false });
-    turnOffMotor({ params: {}, withCredentials: false });
   }, [getWaterMeasure, turnOffMotor]);
 
   const handleFillWater = useCallback(() => {
@@ -142,10 +141,9 @@ export const Home = () => {
             <Separator type="XNano" />
             <Recipient type={'secondary'} volume={Number(waterMeasure) || 0} />
             <Separator type="Nano" />
-
-            <Button expanded onClick={handleFillWater}>
-              Encher
-            </Button>
+            <a href={`${controllerUrl}L`} target="blank">
+              <Button expanded>Encher</Button>
+            </a>
           </Col>
         </Row>
         <Separator type="Medium" />
