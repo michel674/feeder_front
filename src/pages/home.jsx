@@ -126,9 +126,9 @@ export const Home = () => {
             <Separator type="XNano" />
             <Recipient volume={73} />
             <Separator type="Nano" />
-            <Button expanded onClick={handleFillFood} type="s">
-              Encher
-            </Button>{' '}
+            <a href={`${controllerUrl}L`} target="blank">
+              <Button expanded>Encher</Button>
+            </a>
             <Separator type="Nano" />
           </Col>
 
@@ -141,13 +141,12 @@ export const Home = () => {
             <Separator type="XNano" />
             <Recipient type={'secondary'} volume={Number(waterMeasure) || 0} />
             <Separator type="Nano" />
-            <a href={`${controllerUrl}L`} target="blank">
+            <a href={`${controllerUrl}H`} target="blank">
               <Button expanded>Encher</Button>
             </a>
           </Col>
         </Row>
         <Separator type="Medium" />
-        <H3>{controllerUrl}</H3>
       </Grid>
     </>
   );
