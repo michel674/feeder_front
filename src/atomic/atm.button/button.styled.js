@@ -13,6 +13,8 @@ export const ButtonStyled = styled.button`
   font-size: ${FontSize.Nano};
   font-weight: ${FontWeight.SemiBold};
 
+  z-index: 100;
+
   ${props => (props.expanded ? 'width: 100%;' : '')}
 
   padding: ${Spacing.Nano} ${Spacing.Small};
