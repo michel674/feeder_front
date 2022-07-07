@@ -3,7 +3,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { Frame } from '../atomic/atm.frame/frame';
 import { Separator } from '../atomic/atm.separator/separator.styled';
 
-import { H1, H3 } from '../components/typography';
+import { H1, H2, H3 } from '../components/typography';
 import { Hbox } from '../atomic/atm.box/hbox.styled';
 
 import { useRequest } from '../hooks/useRequest.hook';
@@ -13,11 +13,6 @@ import { Button } from '../atomic/atm.button';
 import { useCallback, useEffect, useState } from 'react';
 
 export const Home = () => {
-  const { request: turnOn } = useRequest({ route: '/LM' });
-  const { request: turnOff } = useRequest({
-    route: '/DM',
-  });
-
   const { data: scheduleData, request: getSchedules } = useRequest({
     baseURL: 'http://localhost:1337',
     route: '/schedules',
@@ -26,14 +21,6 @@ export const Home = () => {
   useEffect(() => {
     getSchedules({ params: {}, withCredentials: false });
   }, [getSchedules]);
-
-  const handleTurnLedOn = () => {
-    turnOn({ params: {}, withCredentials: false });
-  };
-
-  const handleTurnLedOff = () => {
-    turnOff({ params: {}, withCredentials: false });
-  };
 
   const [countdown, setCountdown] = useState();
 
@@ -83,6 +70,45 @@ export const Home = () => {
     return result;
   }, []);
 
+  const controllerUrl = 'http://192.168.0.26/';
+
+  const { data, request: getWaterMeasure } = useRequest({
+    route: '/api/water-measures',
+  });
+
+  const { request: turnOnMotor } = useRequest({
+    baseURL: controllerUrl,
+    route: '/H',
+  });
+
+  const { request: turnOffMotor } = useRequest({
+    baseURL: controllerUrl,
+    route: '/L',
+  });
+
+  useEffect(() => {
+    getWaterMeasure({ params: {}, withCredentials: false });
+  }, [getWaterMeasure]);
+
+  const handleUpdateWaterMeasure = () => {
+    getWaterMeasure({ params: {}, withCredentials: false });
+  };
+
+  const waterMeasure =
+    data?.data?.[data?.data?.length - 1]?.attributes?.measure;
+  console.log(
+    'waterMeasure',
+    data?.data?.map(item => item.attributes?.measure),
+  );
+
+  const handleFillWater = () => {
+    turnOnMotor({ params: {}, withCredentials: false });
+  };
+
+  const handleFillFood = () => {
+    turnOffMotor({ params: {}, withCredentials: false });
+  };
+
   return (
     <>
       <Separator type="Small" />
@@ -105,6 +131,16 @@ export const Home = () => {
         <Separator type="Medium" />
 
         <Row>
+          <Col xs={12}>
+            <Button expanded onClick={handleUpdateWaterMeasure}>
+              <H2 color="white">Refresh</H2>
+            </Button>
+          </Col>
+        </Row>
+
+        <Separator type="Medium" />
+
+        <Row>
           <Col xs={6}>
             <Hbox>
               <Hbox.Item hAlign="center">
@@ -115,7 +151,7 @@ export const Home = () => {
             <Recipient volume={73} />
             <Separator type="Nano" />
 
-            <Button expanded onClick={handleTurnLedOn}>
+            <Button expanded onClick={handleFillFood}>
               Encher
             </Button>
           </Col>
@@ -127,10 +163,10 @@ export const Home = () => {
               </Hbox.Item>
             </Hbox>
             <Separator type="XNano" />
-            <Recipient type={'secondary'} volume={53} />
+            <Recipient type={'secondary'} volume={Number(waterMeasure)} />
             <Separator type="Nano" />
 
-            <Button expanded onClick={handleTurnLedOff}>
+            <Button expanded onClick={handleFillWater}>
               Encher
             </Button>
           </Col>

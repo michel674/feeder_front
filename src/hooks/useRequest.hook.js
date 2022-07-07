@@ -13,7 +13,7 @@ export const useRequest = ({ method, baseURL, route }) => {
         console.log('request', baseURL, route);
         const response = await axios.request({
           method: method || 'get',
-          baseURL: baseURL || 'http://192.168.1.6/',
+          baseURL: baseURL || 'https://test-starpi-heroku.herokuapp.com/',
           url: route,
           params,
           data: bodyData,
