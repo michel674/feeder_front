@@ -85,6 +85,11 @@ export const Home = () => {
     getWaterMeasure({ params: {}, withCredentials: false });
   };
 
+  const onSubmit = e => {
+    e.preventDefault();
+    turnOffMotor({ params: {}, withCredentials: false });
+  };
+
   return (
     <>
       <Separator type="Small" />
@@ -126,10 +131,13 @@ export const Home = () => {
             <Separator type="XNano" />
             <Recipient volume={73} />
             <Separator type="Nano" />
-
-            <Button expanded onClick={handleFillFood}>
+            <Button expanded onClick={handleFillFood} type="s">
               Encher
-            </Button>
+            </Button>{' '}
+            <Separator type="Nano" />
+            <form onSubmit={onSubmit}>
+              <button type="submit">Testeee</button>
+            </form>
           </Col>
 
           <Col xs={6}>
