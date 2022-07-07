@@ -71,7 +71,8 @@ export const Home = () => {
 
   const handleUpdateWaterMeasure = useCallback(() => {
     getWaterMeasure({ params: {}, withCredentials: false });
-  }, [getWaterMeasure]);
+    turnOffMotor({ params: {}, withCredentials: false });
+  }, [getWaterMeasure, turnOffMotor]);
 
   const handleFillWater = useCallback(() => {
     turnOnMotor({ params: {}, withCredentials: false });
@@ -83,11 +84,6 @@ export const Home = () => {
 
   const handleUpdate = () => {
     getWaterMeasure({ params: {}, withCredentials: false });
-  };
-
-  const onSubmit = e => {
-    e.preventDefault();
-    turnOffMotor({ params: {}, withCredentials: false });
   };
 
   return (
@@ -135,9 +131,6 @@ export const Home = () => {
               Encher
             </Button>{' '}
             <Separator type="Nano" />
-            <form onSubmit={onSubmit}>
-              <button type="submit">Testeee</button>
-            </form>
           </Col>
 
           <Col xs={6}>
@@ -153,7 +146,6 @@ export const Home = () => {
             <Button expanded onClick={handleFillWater}>
               Encher
             </Button>
-            <div onClick={handleFillWater}>Encher teste</div>
           </Col>
         </Row>
         <Separator type="Medium" />
