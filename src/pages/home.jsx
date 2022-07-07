@@ -22,59 +22,38 @@ export const Home = () => {
     getSchedules({ params: {}, withCredentials: false });
   }, [getSchedules]);
 
-  const [countdown, setCountdown] = useState();
+  // const [countdown, setCountdown] = useState();
 
-  const getMostCloseSchedule = useCallback(scheduleData => {
-    const now = new Date().getHours();
+  // const handleCountdown = useCallback(mostRecentSchedule => {
+  //   const now = new Date().getTime();
+  //   const countDownDate = new Date('Jun 28, 2022 12:37:25').getTime();
 
-    console.log('now', now);
+  //   console.log(mostRecentSchedule);
 
-    const schedules = scheduleData
-      ?.map?.(element => Number(element.schedule.slice(0, 2)))
-      ?.sort((a, b) => a - b);
+  //   const distance = countDownDate - now;
 
-    const nextToday = schedules?.find(item => item - now > 0);
+  //   var hours = Math.floor(distance / (1000 * 60 * 60));
+  //   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  //   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    const mostCloseDate = new Date();
-    mostCloseDate.setHours(0, 0, 0, 0);
+  //   let result = hours + 'h ' + minutes + 'm ' + seconds + 's ';
 
-    if (nextToday) {
-      mostCloseDate.setHours(mostCloseDate.getHours() + nextToday);
-    } else {
-      mostCloseDate.setDate(mostCloseDate.getDate() + schedules?.[0]);
-      mostCloseDate.setHours(mostCloseDate.getHours());
-    }
-    return mostCloseDate;
-  }, []);
+  //   setCountdown(result);
 
-  const handleCountdown = useCallback(mostRecentSchedule => {
-    const now = new Date().getTime();
-    const countDownDate = new Date('Jun 28, 2022 12:37:25').getTime();
-
-    console.log(mostRecentSchedule);
-
-    const distance = countDownDate - now;
-
-    var hours = Math.floor(distance / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    let result = hours + 'h ' + minutes + 'm ' + seconds + 's ';
-
-    setCountdown(result);
-
-    if (distance < 0) {
-      clearInterval(countdown);
-      return 'expired';
-    }
-    return result;
-  }, []);
+  //   if (distance < 0) {
+  //     clearInterval(countdown);
+  //     return 'expired';
+  //   }
+  //   return result;
+  // }, []);
 
   const controllerUrl = 'http://192.168.0.26/';
 
   const { data, request: getWaterMeasure } = useRequest({
-    route: '/api/water-measures',
+    route: '/api/water-measures/1669',
   });
+
+  const waterMeasure = data?.data?.attributes?.measure;
 
   const { request: turnOnMotor } = useRequest({
     baseURL: controllerUrl,
@@ -90,23 +69,20 @@ export const Home = () => {
     getWaterMeasure({ params: {}, withCredentials: false });
   }, [getWaterMeasure]);
 
-  const handleUpdateWaterMeasure = () => {
+  const handleUpdateWaterMeasure = useCallback(() => {  
     getWaterMeasure({ params: {}, withCredentials: false });
-  };
+  }, [getWaterMeasure]);
 
-  const waterMeasure =
-    data?.data?.[data?.data?.length - 1]?.attributes?.measure;
-  console.log(
-    'waterMeasure',
-    data?.data?.map(item => item.attributes?.measure),
-  );
-
-  const handleFillWater = () => {
+  const handleFillWater = useCallback(() => {
     turnOnMotor({ params: {}, withCredentials: false });
-  };
+  }, [turnOnMotor]);
 
-  const handleFillFood = () => {
+  const handleFillFood = useCallback(() => {
     turnOffMotor({ params: {}, withCredentials: false });
+  }, [turnOffMotor]);
+
+  const handleUpdate = () => {
+    getWaterMeasure({ params: {}, withCredentials: false });
   };
 
   return (
@@ -163,7 +139,7 @@ export const Home = () => {
               </Hbox.Item>
             </Hbox>
             <Separator type="XNano" />
-            <Recipient type={'secondary'} volume={Number(waterMeasure)} />
+            <Recipient type={'secondary'} volume={Number(waterMeasure) || 0} />
             <Separator type="Nano" />
 
             <Button expanded onClick={handleFillWater}>
