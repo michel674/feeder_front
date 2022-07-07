@@ -47,7 +47,7 @@ export const Home = () => {
   //   return result;
   // }, []);
 
-  const controllerUrl = 'http://192.168.161.87/';
+  const controllerUrl = 'http://192.168.113.87/';
 
   const { data, request: getWaterMeasure } = useRequest({
     route: '/api/water-measures/1669',
