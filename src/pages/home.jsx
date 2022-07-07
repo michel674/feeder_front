@@ -143,10 +143,12 @@ export const Home = () => {
             <Separator type="Nano" />
 
             <Button expanded onClick={handleFillWater}>
-              Encher
+              controllerUrl
             </Button>
           </Col>
         </Row>
+        <Separator type="Medium" />
+        <H3>{controllerUrl}</H3>
       </Grid>
     </>
   );
