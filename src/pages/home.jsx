@@ -143,8 +143,9 @@ export const Home = () => {
             <Separator type="Nano" />
 
             <Button expanded onClick={handleFillWater}>
-              controllerUrl
+              Encher
             </Button>
+            <div onClick={handleFillWater}>Encher teste</div>
           </Col>
         </Row>
         <Separator type="Medium" />
